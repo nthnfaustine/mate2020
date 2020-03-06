@@ -150,8 +150,8 @@ include_directories(
 #   ${catkin_LIBRARIES}
 # )
 
-add_executable(motorcontroller src/motorcontroller.cpp)
-target_link_libraries(motorcontroller ${catkin_LIBRARIES})
+add_executable(manualcontroller src/manualcontroller.cpp)
+target_link_libraries(manualcontroller ${catkin_LIBRARIES})
 
 #############
 ## Install ##
