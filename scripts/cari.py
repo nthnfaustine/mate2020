@@ -84,7 +84,8 @@ while not rospy.is_shutdown():
         if area < 200:
             continue
         x,y,w,h = cv2.boundingRect(cnt)
-        cv2.rectangle(new_img, (x, y), (x + w, y + h), (0, 255,0), 2)
+        cv2.drawContours(new_img, contours, -1, (0,0,0), 2)
+        # cv2.rectangle(new_img, (x, y), (x + w, y + h), (0, 255,0), 2)
     # cv2.imshow("apa", img)
     cv2.imshow("clahe", new_img)
     cv2.imshow("op", mask1)
