@@ -5,7 +5,7 @@ import cv2
 from skimage import exposure
 from cv_bridge import CvBridge, CvBridgeError
 import rospy
-from sensor_msgs.msg import Image
+from sensor_msgs.msg import Image, CompressedImage
 # from Tkinter import *
 
 angka = 50
@@ -19,6 +19,12 @@ def RecoverCLAHE(sceneRadiance):
         sceneRadiance[:, :, i] = clahe.apply((sceneRadiance[:, :, i]))
     return sceneRadiance
 
+def image_callback(img):
+    global frame
+    ori_cv2 = np.fromstring(img.data, np.uint8)
+    ori_cv2 = cv2.imdecode(ori_cv2, cv2.IMREAD_COLOR)
+    frame = ori_cv2
+
 if __name__ == '__main__':
     rospy.init_node("cameraGCS")
 
@@ -28,7 +34,7 @@ if __name__ == '__main__':
 
     # window.mainloop()
 
-    image_subscriber = rospy.Subscriber('/rov/image', Image, nothing)
+    image_subscriber = rospy.Subscriber('/rov/image/compressed', CompressedImage, image_callback)
 
     np.seterr(over='ignore')
     # cv2.startWindowThread()
@@ -41,9 +47,12 @@ if __name__ == '__main__':
     bridge = CvBridge()
 
     while not rospy.is_shutdown():
-        gambarmsgs = rospy.wait_for_message('/rov/image', Image)
+        gambarmsgs = rospy.wait_for_message('/rov/image/compressed', CompressedImage)
         bridge = CvBridge()
-        frame = bridge.imgmsg_to_cv2(gambarmsgs)
+        # ori_cv2 = np.fromstring(gambarmsgs, np.uint8)
+        # ori_cv2 = cv2.imdecode(ori_cv2, cv2.IMREAD_COLOR)
+        # frame = ori_cv2
+        # frame = bridge.imgmsg_to_cv2(gambarmsgs)
 
         x = cv2.getTrackbarPos("x", "Trackbar")
         y = cv2.getTrackbarPos("y", "Trackbar")

@@ -9,95 +9,99 @@ ros::Publisher override_publisher;
 
 int currentspeedmaju = 1600;
 int currentspeedmundur = 1400;
+int kiridepan = 0;
+int kanandepan = 1;
+int kiribelakang = 2;
+int kananbelakang = 3;
+int kiriatas = 7;
+int kananatas = 5;
 
 void joyCallback(const sensor_msgs::Joy::ConstPtr& msg) {
     if (msg->axes[1] == 1) { //analog kiri(atas)
         mavros_msgs::OverrideRCIn rcin;
-        for(int i=0; i<=5; i++){rcin.channels[i] = 1500;}
-        rcin.channels[2] = currentspeedmaju;
-        rcin.channels[3] = currentspeedmaju;
-        rcin.channels[4] = currentspeedmaju;
-        rcin.channels[5] = currentspeedmaju;
+        for(int i=0; i<=7; i++){rcin.channels[i] = 1500;}
+        rcin.channels[kiridepan] = currentspeedmaju;
+        rcin.channels[kanandepan] = currentspeedmaju;
+        rcin.channels[kiribelakang] = currentspeedmaju;
+        rcin.channels[kananbelakang] = currentspeedmaju;
         override_publisher.publish(rcin);
         ROS_INFO("Maju");
     }  else if (msg->axes[0] == -1) { //analog kiri(kanan)
         mavros_msgs::OverrideRCIn rcin;
-        for(int i=0; i<=5; i++){rcin.channels[i] = 1500;}
-        rcin.channels[2] = 1600;
-        rcin.channels[3] = 1400;
-        rcin.channels[4] = 1400;
-        rcin.channels[5] = 1600;
+        for(int i=0; i<=7; i++){rcin.channels[i] = 1500;}
+        rcin.channels[kiridepan] = currentspeedmaju;
+        rcin.channels[kanandepan] = currentspeedmundur;
+        rcin.channels[kiribelakang] = currentspeedmundur ;
+        rcin.channels[kananbelakang] = currentspeedmaju;
         override_publisher.publish(rcin);
         ROS_INFO("Geser Kanan");
     } else if (msg->axes[0] == 1) { //analog kiri(kiri)
         mavros_msgs::OverrideRCIn rcin;
-        for(int i=0; i<=5; i++){rcin.channels[i] = 1500;}
-        rcin.channels[2] = 1400;
-        rcin.channels[3] = 1600;
-        rcin.channels[4] = 1600;
-        rcin.channels[5] = 1400;
+        for(int i=0; i<=7; i++){rcin.channels[i] = 1500;}
+        rcin.channels[kiridepan] = currentspeedmundur ;
+        rcin.channels[kanandepan] = currentspeedmaju;
+        rcin.channels[kiribelakang] = currentspeedmaju;
+        rcin.channels[kananbelakang] = currentspeedmundur ;
         override_publisher.publish(rcin);
         ROS_INFO("Geser Kiri");
     } else if (msg->axes[1] == -1) { //analog kiri(atas)
         mavros_msgs::OverrideRCIn rcin;
-        for(int i=0; i<=5; i++){rcin.channels[i] = 1500;}
-        rcin.channels[2] = currentspeedmundur;
-        rcin.channels[3] = currentspeedmundur;
-        rcin.channels[4] = currentspeedmundur;
-        rcin.channels[5] = currentspeedmundur;
+        for(int i=0; i<=7; i++){rcin.channels[i] = 1500;}
+        rcin.channels[kiridepan] = currentspeedmundur;
+        rcin.channels[kanandepan] = currentspeedmundur;
+        rcin.channels[kiribelakang] = currentspeedmundur;
+        rcin.channels[kananbelakang] = currentspeedmundur;
         override_publisher.publish(rcin);
         ROS_INFO("Mundur");
     } else if (msg->axes[4] == 1) { //analog kanan(atas)
         mavros_msgs::OverrideRCIn rcin;
-        for(int i=0; i<=5; i++){rcin.channels[i] = 1500;}
-        rcin.channels[0] = 1400;
-        rcin.channels[1] = 1400;
+        for(int i=0; i<=7; i++){rcin.channels[i] = 1500;}
+        rcin.channels[kiriatas] = currentspeedmaju;
+        rcin.channels[kananatas] = currentspeedmaju;
         override_publisher.publish(rcin);
         ROS_INFO("Naik");
     } else if (msg->axes[4] == -1) { //analog kanan(bawah)
         mavros_msgs::OverrideRCIn rcin;
-        for(int i=0; i<=5; i++){rcin.channels[i] = 1500;}
-        rcin.channels[0] = 1600;
-        rcin.channels[1] = 1600;
+        for(int i=0; i<=7; i++){rcin.channels[i] = 1500;}
+        rcin.channels[kiriatas] = currentspeedmundur;
+        rcin.channels[kananatas] = currentspeedmundur;
         override_publisher.publish(rcin);
         ROS_INFO("Turun");
     } else if (msg->axes[3] == -1) { //analog kanan(kanan)
         mavros_msgs::OverrideRCIn rcin;
-        for(int i=0; i<=5; i++){rcin.channels[i] = 1500;}
-        rcin.channels[2] = 1600;
-        rcin.channels[3] = 1400;
-        rcin.channels[4] = 1600;
-        rcin.channels[5] = 1400;
+        for(int i=0; i<=7; i++){rcin.channels[i] = 1500;}
+        rcin.channels[kiridepan] = currentspeedmaju;
+        rcin.channels[kanandepan] = currentspeedmundur;
+        rcin.channels[kiribelakang] = currentspeedmaju;
+        rcin.channels[kananbelakang] = currentspeedmundur;
         override_publisher.publish(rcin);
         ROS_INFO("Putar Kanan");
     } else if (msg->axes[3] == 1) { //analog kanan(kiri)
         mavros_msgs::OverrideRCIn rcin;
-        for(int i=0; i<=5; i++){rcin.channels[i] = 1500;}
-        rcin.channels[0] = 1400;
-        rcin.channels[1] = 1600;
-        rcin.channels[0] = 1400;
-        rcin.channels[1] = 1600;
+        for(int i=0; i<=7; i++){rcin.channels[i] = 1500;}
+        rcin.channels[kiridepan] = currentspeedmundur;
+        rcin.channels[kanandepan] = currentspeedmaju;
+        rcin.channels[kiribelakang] = currentspeedmundur;
+        rcin.channels[kananbelakang] = currentspeedmaju;
         override_publisher.publish(rcin);
         ROS_INFO("Putar Kiri");
-    } else if (msg->buttons[5]== 1) { //R1 Tambah kecepatan maju
+    } else if (msg->buttons[2]== 1) { //Segitiga Tambah kecepatan
         currentspeedmaju += 50;
-        if (currentspeedmaju > 1900){currentspeedmaju = 1900;} 
+        if (currentspeedmaju > 1900){currentspeedmaju = 1900;}
+        currentspeedmundur -= 50;
+        if (currentspeedmundur < 1100){currentspeedmundur = 1100;}  
         cout << "CurrentSpeed maju = " << currentspeedmaju << endl;
-    } else if (msg->buttons[7]== 1) { //R2 Kurangi kecepatan maju
+        cout << "CurrentSpeed mundur = " << currentspeedmundur << endl;
+    } else if (msg->buttons[0]== 1) { //X Kurangi kecepatan maju
         currentspeedmaju -= 50;
         if (currentspeedmaju < 1550){currentspeedmaju = 1550;} 
-        cout << "CurrentSpeed maju = " << currentspeedmaju << endl;
-    } else if (msg->buttons[4]== 1) { //L1 Tambah kecepatan mundur
-        currentspeedmundur -= 50;
-        if (currentspeedmundur < 1100){currentspeedmundur = 1100;} 
-        cout << "CurrentSpeed mundur = " << currentspeedmundur << endl;
-    } else if (msg->buttons[6]== 1) { //L2 Kurangi kecepatan mundur
         currentspeedmundur += 50;
-        if (currentspeedmundur > 1450){currentspeedmundur = 1450;} 
+        if (currentspeedmundur > 1450){currentspeedmundur = 1450;}
+        cout << "CurrentSpeed maju = " << currentspeedmaju << endl; 
         cout << "CurrentSpeed mundur = " << currentspeedmundur << endl;
     } else{
         mavros_msgs::OverrideRCIn rcin;
-        for(int i=0; i<=5; i++){rcin.channels[i] = 1500;}
+        for(int i=0; i<=7; i++){rcin.channels[i] = 1500;}
         override_publisher.publish(rcin);
         ROS_INFO("Diem");
     }
