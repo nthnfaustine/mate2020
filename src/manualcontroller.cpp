@@ -9,12 +9,12 @@ ros::Publisher override_publisher;
 
 int currentspeedmaju = 1600;
 int currentspeedmundur = 1400;
-int kiridepan = 0;
-int kanandepan = 1;
-int kiribelakang = 2;
+int kiridepan = 1;
+int kanandepan = 2;
+int kiribelakang = 0;
 int kananbelakang = 3;
-int kiriatas = 7;
-int kananatas = 5;
+int kiriatas = 4;
+int kananatas = 7;
 
 void joyCallback(const sensor_msgs::Joy::ConstPtr& msg) {
     if (msg->axes[1] == 1) { //analog kiri(atas)
@@ -23,7 +23,7 @@ void joyCallback(const sensor_msgs::Joy::ConstPtr& msg) {
         rcin.channels[kiridepan] = currentspeedmaju;
         rcin.channels[kanandepan] = currentspeedmaju;
         rcin.channels[kiribelakang] = currentspeedmaju;
-        rcin.channels[kananbelakang] = currentspeedmaju;
+        rcin.channels[3] = currentspeedmaju;
         override_publisher.publish(rcin);
         ROS_INFO("Maju");
     }  else if (msg->axes[0] == -1) { //analog kiri(kanan)
@@ -85,14 +85,14 @@ void joyCallback(const sensor_msgs::Joy::ConstPtr& msg) {
         rcin.channels[kananbelakang] = currentspeedmaju;
         override_publisher.publish(rcin);
         ROS_INFO("Putar Kiri");
-    } else if (msg->buttons[2]== 1) { //Segitiga Tambah kecepatan
+    } else if (msg->buttons[0]== 1) { //X Tambah kecepatan
         currentspeedmaju += 50;
         if (currentspeedmaju > 1900){currentspeedmaju = 1900;}
         currentspeedmundur -= 50;
         if (currentspeedmundur < 1100){currentspeedmundur = 1100;}  
         cout << "CurrentSpeed maju = " << currentspeedmaju << endl;
         cout << "CurrentSpeed mundur = " << currentspeedmundur << endl;
-    } else if (msg->buttons[0]== 1) { //X Kurangi kecepatan maju
+    } else if (msg->buttons[2]== 1) { //Segitiga Kurangi kecepatan maju
         currentspeedmaju -= 50;
         if (currentspeedmaju < 1550){currentspeedmaju = 1550;} 
         currentspeedmundur += 50;
